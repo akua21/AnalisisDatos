@@ -1,0 +1,16 @@
+\BOOKMARK [1][-]{section.1}{Pr\341ctica 1: Casas en Boston}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{Tarea 1: Carga de datos}{section.1}% 2
+\BOOKMARK [2][-]{subsection.1.2}{Tarea 2: An\341lisis exploratorio}{section.1}% 3
+\BOOKMARK [2][-]{subsection.1.3}{Tarea 3: Construcci\363n de un modelo de regresi\363n lineal}{section.1}% 4
+\BOOKMARK [3][-]{subsubsection.1.3.1}{Creaci\363n del modelo de regresi\363n}{subsection.1.3}% 5
+\BOOKMARK [3][-]{subsubsection.1.3.2}{Entrenamiento del modelo de regresi\363n}{subsection.1.3}% 6
+\BOOKMARK [3][-]{subsubsection.1.3.3}{Evaluaci\363n del modelo de regresi\363n}{subsection.1.3}% 7
+\BOOKMARK [2][-]{subsection.1.4}{Tarea 4: Mejora del modelo de regresi\363n lineal}{section.1}% 8
+\BOOKMARK [3][-]{subsubsection.1.4.1}{Regularizaci\363n}{subsection.1.4}% 9
+\BOOKMARK [2][-]{subsection.1.5}{Tarea 5: Generalizaci\363n del modelo de regresi\363n lineal}{section.1}% 10
+\BOOKMARK [3][-]{subsubsection.1.5.1}{Divisi\363n de los datos}{subsection.1.5}% 11
+\BOOKMARK [3][-]{subsubsection.1.5.2}{Volver a crear el modelo de regresi\363n lineal b\341sico}{subsection.1.5}% 12
+\BOOKMARK [3][-]{subsubsection.1.5.3}{Volver a crear el modelo de regresi\363n lineal Ridge}{subsection.1.5}% 13
+\BOOKMARK [3][-]{subsubsection.1.5.4}{Volver a crear el modelo de regresi\363n lineal Lasso}{subsection.1.5}% 14
+\BOOKMARK [2][-]{subsection.1.6}{Conclusi\363n}{section.1}% 15
+\BOOKMARK [2][-]{subsection.1.7}{Tarea Extra: Investigaci\363n de otros modelos}{section.1}% 16
