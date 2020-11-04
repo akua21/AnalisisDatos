@@ -591,46 +591,69 @@ entre el resto de atributos y \emph{medv}.
     \end{center}
     { \hspace*{\fill} \\}
 
-    Las gráficas anteriores muestran esta correlación sobre los datos. Para
-ver en mayor profundidad la relación entre las variables, se va a
-calcular además su \textbf{coeficiente de correlación de Pearson}, donde
-los valores que más se acerquen al \emph{1} o al \emph{-1} serán los
-mejores.
+    Las gráficas anteriores muestran una posible correlación sobre los
+datos. Para ver en mayor profundidad la relación entre las variables, se
+va a calcular además su \textbf{coeficiente de correlación de Pearson},
+donde los valores que más se acerquen al \emph{1} o al \emph{-1} serán
+los mejores.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{9}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{from} \PY{n+nn}{scipy} \PY{k}{import} \PY{n}{stats}
 \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+\PY{k+kn}{import} \PY{n+nn}{seaborn} \PY{k}{as} \PY{n+nn}{sns}
 \end{Verbatim}
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{10}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Coeficiente de correlación de Pearson}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{corr} \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{p}{)}
+\PY{n}{ax} \PY{o}{=} \PY{n}{sns}\PY{o}{.}\PY{n}{heatmap}\PY{p}{(}
+    \PY{n}{corr}\PY{p}{,}
+    \PY{n}{vmin}\PY{o}{=}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{vmax}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{center}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{,}
+    \PY{n}{cmap}\PY{o}{=}\PY{n}{sns}\PY{o}{.}\PY{n}{diverging\PYZus{}palette}\PY{p}{(}\PY{l+m+mi}{150}\PY{p}{,} \PY{l+m+mi}{150}\PY{p}{,} \PY{n}{n}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{)}\PY{p}{,}
+    \PY{n}{square}\PY{o}{=}\PY{k+kc}{True}
+\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_21_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+
+    De la gráfica de calor anterior, tan solo interesa la última fila o
+última columna, ya que es la que compara la variable a estudiar con en
+resto de variables.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{11}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Coeficiente de correlación de Pearson de la variable a estudiar con el resto:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
 
 \PY{k}{for} \PY{n}{name} \PY{o+ow}{in} \PY{n}{header}\PY{p}{[}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{:}
-    \PY{n}{coef}\PY{p}{,} \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{stats}\PY{o}{.}\PY{n}{pearsonr}\PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{n}{name}\PY{p}{]}\PY{p}{,} \PY{n}{data}\PY{p}{[}\PY{n}{header}\PY{p}{[}\PY{l+m+mi}{13}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+    \PY{n}{coef} \PY{o}{=} \PY{n}{data}\PY{p}{[}\PY{n}{name}\PY{p}{]}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{n}{header}\PY{p}{[}\PY{l+m+mi}{13}\PY{p}{]}\PY{p}{]}\PY{p}{)}
     \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}t}\PY{l+s+s2}{\PYZhy{} }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+}\PY{n}{name} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{: }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{coef}\PY{p}{)}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-Coeficiente de correlación de Pearson
-        - crim: -0.3883046085868116
-        - zn: 0.3604453424505427
-        - indus: -0.4837251600283726
-        - chas: 0.17526017719029835
-        - nox: -0.4273207723732826
-        - rm: 0.695359947071539
-        - age: -0.3769545650045961
-        - dis: 0.24992873408590394
-        - rad: -0.3816262306397779
-        - tax: -0.4685359335677675
-        - ptratio: -0.5077866855375621
-        - black: 0.3334608196570665
-        - lstat: -0.7376627261740143
+Coeficiente de correlación de Pearson de la variable a estudiar con el resto:
+        - crim: -0.3883046085868114
+        - zn: 0.3604453424505444
+        - indus: -0.48372516002837346
+        - chas: 0.17526017719029738
+        - nox: -0.42732077237328137
+        - rm: 0.6953599470715387
+        - age: -0.3769545650045959
+        - dis: 0.24992873408590385
+        - rad: -0.38162623063977735
+        - tax: -0.4685359335677663
+        - ptratio: -0.507786685537561
+        - black: 0.33346081965706603
+        - lstat: -0.7376627261740145
     \end{Verbatim}
 
     Gracias a esta información se puede ver que las variables que tienen
@@ -674,14 +697,14 @@ Para ver su precisión, se evaluará con las siguientes técnicas:
 regresión}\label{creaciuxf3n-del-modelo-de-regresiuxf3n}}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{11}{\boxspacing}
+\prompt{In}{incolor}{12}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{linear\PYZus{}model} \PY{k}{import} \PY{n}{LinearRegression}
 \end{Verbatim}
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{12}{\boxspacing}
+\prompt{In}{incolor}{13}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{lr} \PY{o}{=} \PY{n}{LinearRegression}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
@@ -695,7 +718,7 @@ regresión}\label{entrenamiento-del-modelo-de-regresiuxf3n}}
 datos a usar.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{13}{\boxspacing}
+\prompt{In}{incolor}{14}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{X} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{n}{header}\PY{p}{[}\PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}\PY{p}{)}
 \PY{n}{y} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{n}{header}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}\PY{p}{)}
@@ -704,7 +727,7 @@ datos a usar.
 \end{tcolorbox}
 
             \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{13}{\boxspacing}
+\prompt{Out}{outcolor}{14}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 LinearRegression()
 \end{Verbatim}
@@ -719,7 +742,7 @@ donde \(\beta_i\) toma los valores que se muestran en la siguiente
 celda:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{14}{\boxspacing}
+\prompt{In}{incolor}{15}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{beta} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{n}{lr}\PY{o}{.}\PY{n}{intercept\PYZus{}}\PY{p}{]} \PY{o}{+} \PY{n+nb}{list}\PY{p}{(}\PY{n}{lr}\PY{o}{.}\PY{n}{coef\PYZus{}}\PY{p}{)}\PY{p}{)}
 \PY{n}{beta} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{beta}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{14}\PY{p}{)}\PY{p}{)}\PY{p}{)}
@@ -743,14 +766,14 @@ celda:
 regresión}\label{evaluaciuxf3n-del-modelo-de-regresiuxf3n}}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{15}{\boxspacing}
+\prompt{In}{incolor}{16}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{y\PYZus{}pred} \PY{o}{=} \PY{n}{lr}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{X}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{16}{\boxspacing}
+\prompt{In}{incolor}{17}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{r2} \PY{o}{=} \PY{n}{lr}\PY{o}{.}\PY{n}{score}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{)}
 \PY{n}{rmse} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{(}\PY{n}{y} \PY{o}{\PYZhy{}} \PY{n}{y\PYZus{}pred}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
@@ -782,7 +805,7 @@ caso toma un valor de \textbf{0.7406}, lo cual es un valor relativamente
 aceptable.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{17}{\boxspacing}
+\prompt{In}{incolor}{18}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{)}\PY{p}{)}
 
@@ -797,9 +820,12 @@ aceptable.
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_36_0.png}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_38_0.png}
     \end{center}
     { \hspace*{\fill} \\}
+
+    Los valores predichos se ajustan bastante bien a los datos reales, a
+excepción de los datos atípicos, que no es capaz de imitar.
 
     \hypertarget{tarea-4-mejora-del-modelo-de-regresiuxf3n-lineal}{%
 \subsection{Tarea 4: Mejora del modelo de regresión
@@ -833,14 +859,14 @@ importancia. Su función de coste es:
 \(\displaystyle Ridge = RSS + \alpha \sum^p_{j=1}\beta_j^2\)
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{18}{\boxspacing}
+\prompt{In}{incolor}{19}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{linear\PYZus{}model} \PY{k}{import} \PY{n}{Ridge}
 \end{Verbatim}
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{19}{\boxspacing}
+\prompt{In}{incolor}{20}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{ridge\PYZus{}scores} \PY{o}{=} \PY{p}{[}\PY{p}{]}
 \PY{n}{ridge\PYZus{}coefs} \PY{o}{=} \PY{p}{[}\PY{p}{]}
@@ -858,14 +884,14 @@ importancia. Su función de coste es:
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{20}{\boxspacing}
+\prompt{In}{incolor}{21}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{ridge\PYZus{}coefs} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{ridge\PYZus{}coefs}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{21}{\boxspacing}
+\prompt{In}{incolor}{22}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{)}\PY{p}{)}
 
@@ -882,7 +908,7 @@ importancia. Su función de coste es:
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_43_0.png}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_46_0.png}
     \end{center}
     { \hspace*{\fill} \\}
 
@@ -898,7 +924,7 @@ modelo.
 crear el modelo que genera mejores resultados.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{22}{\boxspacing}
+\prompt{In}{incolor}{23}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{9}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
 
@@ -913,12 +939,12 @@ crear el modelo que genera mejores resultados.
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_46_0.png}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_49_0.png}
     \end{center}
     { \hspace*{\fill} \\}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{23}{\boxspacing}
+\prompt{In}{incolor}{24}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{best\PYZus{}alpha} \PY{o}{=} \PY{n}{ridge\PYZus{}scores}\PY{o}{.}\PY{n}{index}\PY{p}{(}\PY{n+nb}{min}\PY{p}{(}\PY{n}{ridge\PYZus{}scores}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{l+m+mf}{0.1}
 
@@ -931,7 +957,7 @@ El mejor modelo usa un alfa de 0.4 y tiene un MAE de 3.260328834895458
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{24}{\boxspacing}
+\prompt{In}{incolor}{25}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Modelo con el mejor alfa}
 \PY{n}{rr} \PY{o}{=} \PY{n}{Ridge}\PY{p}{(}\PY{n}{alpha}\PY{o}{=}\PY{n}{best\PYZus{}alpha}\PY{p}{)}
@@ -941,7 +967,7 @@ El mejor modelo usa un alfa de 0.4 y tiene un MAE de 3.260328834895458
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{25}{\boxspacing}
+\prompt{In}{incolor}{26}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{r2} \PY{o}{=} \PY{n}{rr}\PY{o}{.}\PY{n}{score}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{)}
 \PY{n}{rmse} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{(}\PY{n}{y} \PY{o}{\PYZhy{}} \PY{n}{y\PYZus{}pred}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
@@ -981,14 +1007,14 @@ atributos que no son relevantes. Su función de coste es:
 \(\displaystyle Lasso = RSS + \alpha \sum^p_{j=1}|\beta_j|\)
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{26}{\boxspacing}
+\prompt{In}{incolor}{27}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{linear\PYZus{}model} \PY{k}{import} \PY{n}{Lasso}
 \end{Verbatim}
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{27}{\boxspacing}
+\prompt{In}{incolor}{28}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{lasso\PYZus{}scores} \PY{o}{=} \PY{p}{[}\PY{p}{]}
 \PY{n}{lasso\PYZus{}coefs} \PY{o}{=} \PY{p}{[}\PY{p}{]}
@@ -1007,14 +1033,14 @@ atributos que no son relevantes. Su función de coste es:
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{28}{\boxspacing}
+\prompt{In}{incolor}{29}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{lasso\PYZus{}coefs} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{lasso\PYZus{}coefs}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{29}{\boxspacing}
+\prompt{In}{incolor}{30}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{)}\PY{p}{)}
 
@@ -1031,7 +1057,7 @@ atributos que no son relevantes. Su función de coste es:
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_55_0.png}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_58_0.png}
     \end{center}
     { \hspace*{\fill} \\}
 
@@ -1044,7 +1070,7 @@ parece tener mucha relevancia.
 crear el modelo que genera mejores resultados.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{30}{\boxspacing}
+\prompt{In}{incolor}{31}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{9}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
 
@@ -1059,12 +1085,12 @@ crear el modelo que genera mejores resultados.
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_58_0.png}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_61_0.png}
     \end{center}
     { \hspace*{\fill} \\}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{31}{\boxspacing}
+\prompt{In}{incolor}{32}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{best\PYZus{}alpha} \PY{o}{=} \PY{p}{(}\PY{n}{lasso\PYZus{}scores}\PY{o}{.}\PY{n}{index}\PY{p}{(}\PY{n+nb}{min}\PY{p}{(}\PY{n}{lasso\PYZus{}scores}\PY{p}{)}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{l+m+mf}{0.1}
 
@@ -1077,7 +1103,7 @@ El mejor modelo usa un alfa de 0.1 y tiene un MAE de 3.3282231192242113
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{32}{\boxspacing}
+\prompt{In}{incolor}{33}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Modelo con el mejor alfa}
 \PY{n}{ls} \PY{o}{=} \PY{n}{Lasso}\PY{p}{(}\PY{n}{alpha}\PY{o}{=}\PY{n}{best\PYZus{}alpha}\PY{p}{)}
@@ -1087,7 +1113,7 @@ El mejor modelo usa un alfa de 0.1 y tiene un MAE de 3.3282231192242113
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{33}{\boxspacing}
+\prompt{In}{incolor}{34}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{r2} \PY{o}{=} \PY{n}{ls}\PY{o}{.}\PY{n}{score}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{y}\PY{p}{)}
 \PY{n}{rmse} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{(}\PY{n}{y} \PY{o}{\PYZhy{}} \PY{n}{y\PYZus{}pred}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
@@ -1131,17 +1157,23 @@ de conseguir esto, en este caso concreto, es mezclar todos los datos de
 forma aleatoria, y luego separarlos en las proporciones deseadas.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{34}{\boxspacing}
+\prompt{In}{incolor}{35}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{allData} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{data}\PY{p}{[}\PY{n}{header}\PY{p}{]}\PY{p}{)}
-\PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{shuffle}\PY{p}{(}\PY{n}{allData}\PY{p}{)}
+\PY{n}{data} \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{sample}\PY{p}{(}\PY{n}{frac}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{.}\PY{n}{reset\PYZus{}index}\PY{p}{(}\PY{n}{drop}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{36}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{allData} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{data}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
     Hay que definir los tamaños de cada conjunto.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{35}{\boxspacing}
+\prompt{In}{incolor}{37}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{train\PYZus{}size} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{allData}\PY{p}{)} \PY{o}{*} \PY{l+m+mf}{0.7}\PY{p}{)}
 \PY{n}{test\PYZus{}size} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{allData}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{train\PYZus{}size}
@@ -1154,7 +1186,7 @@ El tamaño del conjunto de entrenamiento es 354 y el del conjunto de test es 152
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{36}{\boxspacing}
+\prompt{In}{incolor}{38}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{X\PYZus{}train} \PY{o}{=} \PY{n}{allData}\PY{p}{[}\PY{p}{:}\PY{n}{train\PYZus{}size}\PY{p}{,} \PY{p}{:}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
 \PY{n}{y\PYZus{}train} \PY{o}{=} \PY{n}{allData}\PY{p}{[}\PY{p}{:}\PY{n}{train\PYZus{}size}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
@@ -1169,14 +1201,14 @@ El tamaño del conjunto de entrenamiento es 354 y el del conjunto de test es 152
 básico}\label{volver-a-crear-el-modelo-de-regresiuxf3n-lineal-buxe1sico}}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{37}{\boxspacing}
+\prompt{In}{incolor}{39}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{lr} \PY{o}{=} \PY{n}{LinearRegression}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{38}{\boxspacing}
+\prompt{In}{incolor}{40}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{lr}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{)}
 \PY{n}{y\PYZus{}pred\PYZus{}train} \PY{o}{=} \PY{n}{lr}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{)}
@@ -1185,7 +1217,7 @@ básico}\label{volver-a-crear-el-modelo-de-regresiuxf3n-lineal-buxe1sico}}
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{39}{\boxspacing}
+\prompt{In}{incolor}{41}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{r2\PYZus{}train} \PY{o}{=} \PY{n}{lr}\PY{o}{.}\PY{n}{score}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{)}
 \PY{n}{rmse\PYZus{}train} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{(}\PY{n}{y\PYZus{}train} \PY{o}{\PYZhy{}} \PY{n}{y\PYZus{}pred\PYZus{}train}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
@@ -1212,45 +1244,25 @@ básico}\label{volver-a-crear-el-modelo-de-regresiuxf3n-lineal-buxe1sico}}
 
     \begin{Verbatim}[commandchars=\\\{\}]
 Error de entrenamiento
-Coeficiente R² = 0.7365112117578918
-RMSE = 4.634378817773989
-MAE = 3.2867273475832857
+Coeficiente R² = 0.71366652310908
+RMSE = 4.848161954755153
+MAE = 3.3762016141322015
 
 Error de test
-Coeficiente R² = 0.744321279005614
-RMSE = 4.828287738883143
-MAE = 3.3042519271717405
+Coeficiente R² = 0.7898022447470276
+RMSE = 4.345131474920369
+MAE = 3.179106202713651
     \end{Verbatim}
 
     Tal y como se ve, la evaluación del conjunto de entrenamiento y el
-conjunto de test parece bastante similar, y no parece haber una muestra
-muy grande de sobre-entrenamiento, lo cual es una buena señal.
+conjunto de test parece bastante similar, y no parece haber indicio de
+sobre-entrenamiento, lo cual es una buena señal.
 
 Este nuevo modelo muestra resultados ligeramente peores respecto a los
 obtenidos en el modelo original, pero no se podría considerar una gran
 diferencia. En cambio, es capaz de predecir correctamente con datos no
 vistos por el modelo previamente, demostrando que es capaz de
 generalizar.
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{40}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{)}\PY{p}{)}
-
-\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{aqua}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Valor Real}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{y\PYZus{}pred\PYZus{}test}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gold}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{n}{label}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Valor Predicho}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-
-\PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{)}
-\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Valor real vs valor predicho en el conjunto de test}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{fontsize}\PY{o}{=}\PY{l+m+mi}{16}\PY{p}{)}
-
-\PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_74_0.png}
-    \end{center}
-    { \hspace*{\fill} \\}
 
     A continuación, se volverá a repetir la regularización del modelo (Tarea
 4), pero en este caso haciendo uso del conjunto de test para evaluar el
@@ -1261,7 +1273,7 @@ valor de alfa.
 Ridge}\label{volver-a-crear-el-modelo-de-regresiuxf3n-lineal-ridge}}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{41}{\boxspacing}
+\prompt{In}{incolor}{42}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{ridge\PYZus{}scores} \PY{o}{=} \PY{p}{[}\PY{p}{]}
 \PY{n}{ridge\PYZus{}coefs} \PY{o}{=} \PY{p}{[}\PY{p}{]}
@@ -1279,14 +1291,14 @@ Ridge}\label{volver-a-crear-el-modelo-de-regresiuxf3n-lineal-ridge}}
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{42}{\boxspacing}
+\prompt{In}{incolor}{43}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{ridge\PYZus{}coefs} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{ridge\PYZus{}coefs}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{43}{\boxspacing}
+\prompt{In}{incolor}{44}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{)}\PY{p}{)}
 
@@ -1303,7 +1315,7 @@ Ridge}\label{volver-a-crear-el-modelo-de-regresiuxf3n-lineal-ridge}}
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_79_0.png}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_82_0.png}
     \end{center}
     { \hspace*{\fill} \\}
 
@@ -1311,7 +1323,7 @@ Ridge}\label{volver-a-crear-el-modelo-de-regresiuxf3n-lineal-ridge}}
 similares a los resultados originales.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{44}{\boxspacing}
+\prompt{In}{incolor}{45}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{9}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
 
@@ -1326,12 +1338,12 @@ similares a los resultados originales.
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_81_0.png}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_84_0.png}
     \end{center}
     { \hspace*{\fill} \\}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{45}{\boxspacing}
+\prompt{In}{incolor}{46}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{best\PYZus{}alpha} \PY{o}{=} \PY{n}{ridge\PYZus{}scores}\PY{o}{.}\PY{n}{index}\PY{p}{(}\PY{n+nb}{min}\PY{p}{(}\PY{n}{ridge\PYZus{}scores}\PY{p}{)}\PY{p}{)}\PY{o}{*}\PY{l+m+mf}{0.1}
 
@@ -1340,11 +1352,12 @@ similares a los resultados originales.
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-El mejor modelo usa un alfa de 0.0 y tiene un MAE de 3.304251927171751
+El mejor modelo usa un alfa de 0.7000000000000001 y tiene un MAE de
+3.125285870464135
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{46}{\boxspacing}
+\prompt{In}{incolor}{47}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Modelo con el mejor alfa}
 \PY{n}{rr} \PY{o}{=} \PY{n}{Ridge}\PY{p}{(}\PY{n}{alpha}\PY{o}{=}\PY{n}{best\PYZus{}alpha}\PY{p}{)}
@@ -1355,7 +1368,7 @@ El mejor modelo usa un alfa de 0.0 y tiene un MAE de 3.304251927171751
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{47}{\boxspacing}
+\prompt{In}{incolor}{48}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{r2\PYZus{}train} \PY{o}{=} \PY{n}{rr}\PY{o}{.}\PY{n}{score}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{)}
 \PY{n}{rmse\PYZus{}train} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{(}\PY{n}{y\PYZus{}train} \PY{o}{\PYZhy{}} \PY{n}{y\PYZus{}pred\PYZus{}train}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
@@ -1382,14 +1395,14 @@ El mejor modelo usa un alfa de 0.0 y tiene un MAE de 3.304251927171751
 
     \begin{Verbatim}[commandchars=\\\{\}]
 Error de entrenamiento
-Coeficiente R² = 0.7365112117578918
-RMSE = 4.63437881777399
-MAE = 3.286727347583282
+Coeficiente R² = 0.7112526220844647
+RMSE = 4.868554996989833
+MAE = 3.3594011314943044
 
 Error de test
-Coeficiente R² = 0.7443212790056133
-RMSE = 4.828287738883151
-MAE = 3.304251927171751
+Coeficiente R² = 0.7923991786728523
+RMSE = 4.318206617852234
+MAE = 3.125285870464135
     \end{Verbatim}
 
     Los resultados son muy semejantes a los anteriores. No da la impresión
@@ -1403,7 +1416,7 @@ disminuye su capacidad de predicción.
 Lasso}\label{volver-a-crear-el-modelo-de-regresiuxf3n-lineal-lasso}}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{48}{\boxspacing}
+\prompt{In}{incolor}{49}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{lasso\PYZus{}scores} \PY{o}{=} \PY{p}{[}\PY{p}{]}
 \PY{n}{lasso\PYZus{}coefs} \PY{o}{=} \PY{p}{[}\PY{p}{]}
@@ -1421,14 +1434,14 @@ Lasso}\label{volver-a-crear-el-modelo-de-regresiuxf3n-lineal-lasso}}
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{49}{\boxspacing}
+\prompt{In}{incolor}{50}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{lasso\PYZus{}coefs} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{lasso\PYZus{}coefs}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{50}{\boxspacing}
+\prompt{In}{incolor}{51}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,}\PY{l+m+mi}{8}\PY{p}{)}\PY{p}{)}
 
@@ -1445,7 +1458,7 @@ Lasso}\label{volver-a-crear-el-modelo-de-regresiuxf3n-lineal-lasso}}
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_89_0.png}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_92_0.png}
     \end{center}
     { \hspace*{\fill} \\}
 
@@ -1453,7 +1466,7 @@ Lasso}\label{volver-a-crear-el-modelo-de-regresiuxf3n-lineal-lasso}}
 original y esta son semejantes.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{51}{\boxspacing}
+\prompt{In}{incolor}{52}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{9}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{)}
 
@@ -1468,12 +1481,12 @@ original y esta son semejantes.
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_91_0.png}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_94_0.png}
     \end{center}
     { \hspace*{\fill} \\}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{52}{\boxspacing}
+\prompt{In}{incolor}{53}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{best\PYZus{}alpha} \PY{o}{=} \PY{p}{(}\PY{n}{lasso\PYZus{}scores}\PY{o}{.}\PY{n}{index}\PY{p}{(}\PY{n+nb}{min}\PY{p}{(}\PY{n}{lasso\PYZus{}scores}\PY{p}{)}\PY{p}{)}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{*}\PY{l+m+mf}{0.1}
 
@@ -1482,11 +1495,11 @@ original y esta son semejantes.
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-El mejor modelo usa un alfa de 0.1 y tiene un MAE de 3.3728730589928384
+El mejor modelo usa un alfa de 0.1 y tiene un MAE de 3.185733193017345
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{53}{\boxspacing}
+\prompt{In}{incolor}{54}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{c+c1}{\PYZsh{} Modelo con el mejor alfa}
 \PY{n}{ls} \PY{o}{=} \PY{n}{Lasso}\PY{p}{(}\PY{n}{alpha}\PY{o}{=}\PY{n}{best\PYZus{}alpha}\PY{p}{)}
@@ -1497,7 +1510,7 @@ El mejor modelo usa un alfa de 0.1 y tiene un MAE de 3.3728730589928384
 \end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{54}{\boxspacing}
+\prompt{In}{incolor}{55}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{r2\PYZus{}train} \PY{o}{=} \PY{n}{ls}\PY{o}{.}\PY{n}{score}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{)}
 \PY{n}{rmse\PYZus{}train} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{mean}\PY{p}{(}\PY{p}{(}\PY{n}{y\PYZus{}train} \PY{o}{\PYZhy{}} \PY{n}{y\PYZus{}pred\PYZus{}train}\PY{p}{)}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
@@ -1524,14 +1537,14 @@ El mejor modelo usa un alfa de 0.1 y tiene un MAE de 3.3728730589928384
 
     \begin{Verbatim}[commandchars=\\\{\}]
 Error de entrenamiento
-Coeficiente R² = 0.7242305540222564
-RMSE = 4.741148231323288
-MAE = 3.337768930487149
+Coeficiente R² = 0.6983868443724749
+RMSE = 4.975837582323464
+MAE = 3.423050173589846
 
 Error de test
-Coeficiente R² = 0.7242109325110033
-RMSE = 5.014577807651741
-MAE = 3.3728730589928384
+Coeficiente R² = 0.7815665483693118
+RMSE = 4.429436287069334
+MAE = 3.185733193017345
     \end{Verbatim}
 
     Con este nuevo modelo se puede confirmar que la regularización en este
@@ -1561,7 +1574,7 @@ generalizar.
 Los pesos obtenidos por este modelo son:
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{55}{\boxspacing}
+\prompt{In}{incolor}{56}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{n}{beta} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{n}{lr}\PY{o}{.}\PY{n}{intercept\PYZus{}}\PY{p}{]} \PY{o}{+} \PY{n+nb}{list}\PY{p}{(}\PY{n}{lr}\PY{o}{.}\PY{n}{coef\PYZus{}}\PY{p}{)}\PY{p}{)}
 \PY{n}{beta} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{beta}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{14}\PY{p}{)}\PY{p}{)}\PY{p}{)}
@@ -1572,13 +1585,22 @@ Los pesos obtenidos por este modelo son:
 
 
     \begin{verbatim}
-          b0     crim        zn     indus      chas        nox        rm  \
-0  34.804831 -0.10611  0.041193  0.046231  2.674513 -15.517521  3.768129
+          b0      crim        zn     indus      chas       nox       rm  \
+0  41.060804 -0.120454  0.035261  0.004045  2.748725 -20.20319  3.43025
 
-        age       dis       rad       tax   ptratio     black     lstat
-0 -0.002672 -1.306555  0.267505 -0.011312 -0.890651  0.007177 -0.548472
+        age      dis       rad       tax   ptratio     black     lstat
+0 -0.006915 -1.49219  0.303696 -0.011438 -0.911382  0.006933 -0.539501
     \end{verbatim}
 
+
+    Gracias al estudio previo, se ha podido determinar cuales eran las
+variables con mayor correlación, y luego, mediante la regularización, se
+ha podido comprobar si estas variables que tenían más correlación eran
+realmente útiles en el problema o no.
+
+A pesar de que estas técnicas no han supuesto una mejora en el modelo,
+es un estudio interesante que aporta información, y, en otros problemas,
+si puede llegar a suponer una mejora en el modelo.
 
     \hypertarget{tarea-extra-investigaciuxf3n-de-otros-modelos}{%
 \subsection{Tarea Extra: Investigación de otros
@@ -1591,7 +1613,7 @@ lineal. Concretamente, se va a usar el algoritmo de los
 \textbf{K-vecinos más cercanos}.
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{56}{\boxspacing}
+\prompt{In}{incolor}{57}{\boxspacing}
 \begin{Verbatim}[commandchars=\\\{\}]
 \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{neighbors} \PY{k}{import} \PY{n}{KNeighborsRegressor}
 \end{Verbatim}
@@ -1606,20 +1628,6 @@ pero, en este caso, se va a usar la modificación del algoritmo que
 permite usar medias ponderadas usando las distancias a cada uno de
 ellos, de forma que los valores atípicos no generen demasiado error en
 la predicción.
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{57}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{X\PYZus{}test}\PY{o}{.}\PY{n}{shape}
-\end{Verbatim}
-\end{tcolorbox}
-
-            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
-\prompt{Out}{outcolor}{57}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-(152, 13)
-\end{Verbatim}
-\end{tcolorbox}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
 \prompt{In}{incolor}{58}{\boxspacing}
@@ -1651,7 +1659,7 @@ la predicción.
 \end{tcolorbox}
 
     \begin{center}
-    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_104_0.png}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_107_0.png}
     \end{center}
     { \hspace*{\fill} \\}
 
@@ -1665,7 +1673,7 @@ la predicción.
 \end{tcolorbox}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-El mejor modelo usa una k de 2 y tiene un 'score' de 0.6796470890091217
+El mejor modelo usa una k de 8 y tiene un 'score' de 0.5899383026462905
     \end{Verbatim}
 
     \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
@@ -1717,14 +1725,14 @@ RMSE = 0.0
 MAE = 0.0
 
 Error de test
-Coeficiente R² = 0.6796470890091217
-RMSE = 5.404558081979552
-MAE = 3.7445597794796717
+Coeficiente R² = 0.5899383026462905
+RMSE = 6.068948993469138
+MAE = 4.410039021829905
     \end{Verbatim}
 
     Este algoritmo no supone una mejora respecto al modelo de regresión
 lineal, a pesar de usar técnicas no lineales. Esto se puede deber a que
-los valores esten, o muy separados, o muy juntos en el espacio de
+los valores estén, o muy separados, o muy juntos en el espacio de
 búsqueda, de forma que las medias supongan un error muy grande.
 
 Se puede ver que este algoritmo no es adecuado para resolver este
